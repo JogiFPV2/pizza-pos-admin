@@ -1,4 +1,17 @@
 
+import { db } from '../db';
+import { ingredientsTable } from '../db/schema';
 import { type Ingredient } from '../schema';
 
-export declare function getIngredients(): Promise<Ingredient[]>;
+export const getIngredients = async (): Promise<Ingredient[]> => {
+  try {
+    const results = await db.select()
+      .from(ingredientsTable)
+      .execute();
+
+    return results;
+  } catch (error) {
+    console.error('Failed to get ingredients:', error);
+    throw error;
+  }
+};
